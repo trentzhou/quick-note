@@ -5,6 +5,7 @@
 #include <QAudioRecorder>
 #include <QUrl>
 #include <QDir>
+#include <QMediaRecorder>
 
 QuickNote::QuickNote(QObject *parent) : QObject(parent)
 {
@@ -59,8 +60,9 @@ void QuickNote::startRecord()
         QAudioEncoderSettings audioSettings;
         audioSettings.setCodec("audio/mpeg, mpegversion=(int)1, layer=(int)3");
         audioSettings.setQuality(QMultimedia::HighQuality);
-        recorder->setContainerFormat("audio/mpeg, mpegversion=(int)1");
-        recorder->setEncodingSettings(audioSettings);
+        //recorder->setContainerFormat("audio/mpeg, mpegversion=(int)1");
+        QString container = "audio/mpeg, mpegversion=(int)1";
+        recorder->setEncodingSettings(audioSettings, QVideoEncoderSettings(), container);
         recorder->setOutputLocation(QUrl::fromLocalFile(path));
         recorder->record();
     }
