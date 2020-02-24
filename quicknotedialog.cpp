@@ -19,6 +19,7 @@ QuickNoteDialog::QuickNoteDialog(QWidget *parent) :
 
 QuickNoteDialog::~QuickNoteDialog()
 {
+    delete quickNote;
     delete ui;
 }
 

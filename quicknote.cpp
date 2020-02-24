@@ -17,6 +17,11 @@ QuickNote::QuickNote(QObject *parent) : QObject(parent)
     doneFilePath = rootFolder + "/done.txt";
 }
 
+QuickNote::~QuickNote()
+{
+    stopRecord();
+}
+
 void QuickNote::writeText(const QString& text)
 {
     QString notePath = getNotePath();
@@ -40,7 +45,7 @@ QString QuickNote::getAudioNotePath()
     {
         dir.mkpath(folder);
     }
-    return  folder + now.toString("yyyy-MM-dd-HH-mm-ss") + ".mka";
+    return  folder + now.toString("yyyy-MM-dd-HH-mm-ss") + ".mp3";
 }
 
 void QuickNote::startRecord()
@@ -52,9 +57,9 @@ void QuickNote::startRecord()
         recorder = new QAudioRecorder(this);
 
         QAudioEncoderSettings audioSettings;
-        audioSettings.setCodec("audio/mpeg");
+        audioSettings.setCodec("audio/mpeg, mpegversion=(int)1, layer=(int)3");
         audioSettings.setQuality(QMultimedia::HighQuality);
-        recorder->setContainerFormat("Matroska");
+        recorder->setContainerFormat("audio/mpeg, mpegversion=(int)1");
         recorder->setEncodingSettings(audioSettings);
         recorder->setOutputLocation(QUrl::fromLocalFile(path));
         recorder->record();
